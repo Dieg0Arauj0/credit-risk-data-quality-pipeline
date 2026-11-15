@@ -1,0 +1,18 @@
+# Ambiente Python e cache
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Dados mantidos localmente
+/data/raw/*.csv
+/data/raw/*.parquet
+/data/processed/*.csv
+/data/processed/*.parquet
+
+# Configurações locais
+.vscode/
+.DS_Store
+Thumbs.db
