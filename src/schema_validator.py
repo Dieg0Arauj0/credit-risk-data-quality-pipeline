@@ -43,3 +43,31 @@ def resumir_ausencias(dados: pd.DataFrame) -> pd.DataFrame:
     })
 
     return resumo.round(2).rename_axis("coluna")
+
+CLEAN_SCHEMA = pa.DataFrameSchema(
+    {
+        "age": pa.Column(checks=pa.Check.ge(18)),
+        "RevolvingUtilizationOfUnsecuredLines": pa.Column(float),
+        "DebtRatio": pa.Column(float),
+        "MonthlyIncome": pa.Column(float),
+        "NumberOfOpenCreditLinesAndLoans": pa.Column(int, checks=pa.Check.ge(0)),
+        "NumberRealEstateLoansOrLines": pa.Column(int, checks=pa.Check.ge(0)),
+        "NumberOfDependents": pa.Column(float, checks=pa.Check.ge(0)),
+        "NumberOfTime30-59DaysPastDueNotWorse": pa.Column(
+            checks=[pa.Check.ge(0), pa.Check.notin([96, 98])],
+        ),
+        "NumberOfTime60-89DaysPastDueNotWorse": pa.Column(
+            checks=[pa.Check.ge(0), pa.Check.notin([96, 98])],
+        ),
+        "NumberOfTimes90DaysLate": pa.Column(
+            checks=[pa.Check.ge(0), pa.Check.notin([96, 98])],
+        ),
+        "tem_atraso_96_98": pa.Column(checks=pa.Check.isin([0, 1])),
+        "is_income_missing": pa.Column(checks=pa.Check.isin([0, 1])),
+        "is_dependents_missing": pa.Column(checks=pa.Check.isin([0, 1])),
+        "is_income_zero": pa.Column(checks=pa.Check.isin([0, 1])),
+        "TotalPastDue": pa.Column(checks=pa.Check.ge(0)),
+        "HasSevereDelinquencyHistory": pa.Column(checks=pa.Check.isin([0, 1])),
+    },
+    strict=False,
+)
